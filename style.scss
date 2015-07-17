@@ -1,0 +1,74 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  height: 100%;
+  background-color: slategrey;
+  color: whitesmoke;
+}
+
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+h1 {
+  margin: .5em 0 0;
+  font-size: 3rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 5px #444;
+}
+
+button {
+  margin: 1rem .5rem;
+  padding: .5rem 1rem;
+  border: thin solid black;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: all .4s ease;
+  &:hover {
+    background-color: darkslategrey;
+    color: white;
+  }
+}
+
+.grid {
+  margin: auto;
+  border-spacing: 0;
+  border-collapse: collapse;
+
+  td {
+    border: 1px solid slategrey;
+  }
+
+  input[type='checkbox'] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    // appearance not yet re-added to css spec - here for potential future usage
+    appearance: none;
+    display: block;
+    width: 20px;
+    height: 20px;
+    border: 0;
+    background: whitesmoke;
+
+    &:focus {
+      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+      outline: 2px solid rgba(81, 203, 238, 1);
+    }
+
+    &:checked {
+      background: black;
+      box-shadow: 0 0 0 99px darkslategray inset;
+    }
+  }
+}
+
+input#autoplay {
+  height: 20px;
+  width: 20px;
+  vertical-align: sub;
+}
