@@ -1,6 +1,6 @@
-### Conway's game of life
+## Conway's game of life
 
-## Based on [wikipedia conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
+### Based on [wikipedia conway's game of life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
 Click on squares to add units, you can also navigate using arrow keys and spacebar to toggle units.
 
