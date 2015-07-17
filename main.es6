@@ -52,13 +52,8 @@ function shallowClone(arr) {
 })();
 
 (function() {
-    let _ = self.lifeView = function(table, size) {
-        this.grid = table;
-        this.size = size;
-        this.started = false;
-        this.autoplay = false;
-
-        this.createGrid();
+    let _ = self.lifeView = function(size = 12, speed = 1000, table = $('.grid')) {
+        this.init(size, speed, table);
     };
 
     _.prototype = {
@@ -136,21 +131,32 @@ function shallowClone(arr) {
             }
 
             if (this.autoplay) {
-                this.timer = setTimeout(() => this.next(), 700)
+                this.timer = setTimeout(() => this.next(), this.speed)
             }
+        },
+
+        init(size = 12, speed = 50, table = $('.grid')) {
+            this.size = size;
+            this.speed = speed;
+            this.grid = table;
+            this.started = false;
+            this.autoplay = false;
+
+            this.createGrid();
         }
 
     }
 
 })();
 
-let lifeView = new lifeView($('.grid'), 12);
+let lifeView = new lifeView();
 
 (function() {
 
     let buttons = {
         next: $('button.next'),
-        autoplay: $('#autoplay')
+        autoplay: $('#autoplay'),
+        newGame: $('button.newGame')
     };
 
     buttons.next.addEventListener('click', function() {
@@ -160,11 +166,11 @@ let lifeView = new lifeView($('.grid'), 12);
     buttons.autoplay.addEventListener('change', function() {
         buttons.next.disabled = this.checked;
         lifeView.autoplay = this.checked;
-        if (lifeView.autoplay) {
-            lifeView.next();
-        } else {
-            clearTimeout(lifeView.timer);
-        }
+        this.checked ? lifeView.next() : clearTimeout(lifeView.timer);
     });
+
+    buttons.newGame.addEventListener('click', function() {
+        lifeView.init(+prompt('Grid size?') || 12);
+    })
 
 })();

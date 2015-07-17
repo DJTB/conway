@@ -56,13 +56,12 @@ function shallowClone(arr) {
 })();
 
 (function () {
-    var _ = self.lifeView = function (table, size) {
-        this.grid = table;
-        this.size = size;
-        this.started = false;
-        this.autoplay = false;
+    var _ = self.lifeView = function () {
+        var size = arguments.length <= 0 || arguments[0] === undefined ? 12 : arguments[0];
+        var speed = arguments.length <= 1 || arguments[1] === undefined ? 1000 : arguments[1];
+        var table = arguments.length <= 2 || arguments[2] === undefined ? $('.grid') : arguments[2];
 
-        this.createGrid();
+        this.init(size, speed, table);
     };
 
     _.prototype = Object.defineProperties({
@@ -144,8 +143,22 @@ function shallowClone(arr) {
             if (this.autoplay) {
                 this.timer = setTimeout(function () {
                     return _this2.next();
-                }, 700);
+                }, this.speed);
             }
+        },
+
+        init: function init() {
+            var size = arguments.length <= 0 || arguments[0] === undefined ? 12 : arguments[0];
+            var speed = arguments.length <= 1 || arguments[1] === undefined ? 50 : arguments[1];
+            var table = arguments.length <= 2 || arguments[2] === undefined ? $('.grid') : arguments[2];
+
+            this.size = size;
+            this.speed = speed;
+            this.grid = table;
+            this.started = false;
+            this.autoplay = false;
+
+            this.createGrid();
         }
 
     }, {
@@ -163,13 +176,14 @@ function shallowClone(arr) {
     });
 })();
 
-var lifeView = new lifeView($('.grid'), 12);
+var lifeView = new lifeView();
 
 (function () {
 
     var buttons = {
         next: $('button.next'),
-        autoplay: $('#autoplay')
+        autoplay: $('#autoplay'),
+        newGame: $('button.newGame')
     };
 
     buttons.next.addEventListener('click', function () {
@@ -179,11 +193,11 @@ var lifeView = new lifeView($('.grid'), 12);
     buttons.autoplay.addEventListener('change', function () {
         buttons.next.disabled = this.checked;
         lifeView.autoplay = this.checked;
-        if (lifeView.autoplay) {
-            lifeView.next();
-        } else {
-            clearTimeout(lifeView.timer);
-        }
+        this.checked ? lifeView.next() : clearTimeout(lifeView.timer);
+    });
+
+    buttons.newGame.addEventListener('click', function () {
+        lifeView.init(+prompt('Grid size?') || 12);
     });
 })();
 

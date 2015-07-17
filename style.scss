@@ -8,6 +8,17 @@
   color: whitesmoke;
 }
 
+%inactive {
+  background-color: dimgray;
+  color: gainsboro;
+  cursor: not-allowed;
+}
+
+%focus-glow {
+  box-shadow: 0 0 5px rgba(51, 203, 120, 1);
+  outline: 2px solid rgba(51, 203, 120, 1);
+}
+
 html {
   height: 100%;
   background-color: slategray;
@@ -44,9 +55,12 @@ button,
     @extend %dark-bg;
   }
   &:disabled {
-    background-color: dimgray;
-    color: gainsboro;
+    @extend %inactive;
   }
+}
+
+.playlabel {
+  display: inline-block;
 }
 
 #autoplay {
@@ -66,25 +80,35 @@ button,
     border: 1px solid slategrey;
   }
 
+  @keyframes birth {
+    40% {
+      background-color: palegreen;
+    }
+    55% {
+      background-color: darken(palegreen, 20%);
+    }
+    70% {
+      background-color: darkslategray;
+    }
+  }
+
   input[type='checkbox'] {
     -moz-appearance: none;
     -webkit-appearance: none;
     // appearance not yet re-added to css spec - here for potential future usage
     appearance: none;
     display: block;
+    background: whitesmoke;
     width: 20px;
     height: 20px;
     border: 0;
-    background: whitesmoke;
-
     &:focus {
-      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-      outline: 2px solid rgba(81, 203, 238, 1);
+      @extend %focus-glow;
     }
 
     &:checked {
-      background: black;
-      box-shadow: 0 0 0 99px darkslategray inset;
+      background-color: darkslategrey;
+      animation: birth 500ms;
     }
   }
 }

@@ -7,6 +7,16 @@ button:hover,
   background-color: darkslategrey;
   color: whitesmoke; }
 
+button:disabled,
+.button:disabled {
+  background-color: dimgray;
+  color: gainsboro;
+  cursor: not-allowed; }
+
+.grid input[type='checkbox']:focus {
+  box-shadow: 0 0 5px #33cb78;
+  outline: 2px solid #33cb78; }
+
 html {
   height: 100%;
   background-color: slategray;
@@ -36,10 +46,9 @@ button,
   font-size: 1.1em;
   cursor: pointer;
   transition: all .2s ease; }
-  button:disabled,
-  .button:disabled {
-    background-color: dimgray;
-    color: gainsboro; }
+
+.playlabel {
+  display: inline-block; }
 
 #autoplay {
   position: absolute;
@@ -51,20 +60,24 @@ button,
   border-collapse: collapse; }
   .grid td {
     border: 1px solid slategrey; }
+@keyframes birth {
+  40% {
+    background-color: palegreen; }
+  55% {
+    background-color: #36f736; }
+  70% {
+    background-color: darkslategray; } }
   .grid input[type='checkbox'] {
     -moz-appearance: none;
     -webkit-appearance: none;
     appearance: none;
     display: block;
+    background: whitesmoke;
     width: 20px;
     height: 20px;
-    border: 0;
-    background: whitesmoke; }
-    .grid input[type='checkbox']:focus {
-      box-shadow: 0 0 5px #51cbee;
-      outline: 2px solid #51cbee; }
+    border: 0; }
     .grid input[type='checkbox']:checked {
-      background: black;
-      box-shadow: 0 0 0 99px darkslategray inset; }
+      background-color: darkslategrey;
+      animation: birth 500ms; }
 
 /*# sourceMappingURL=style.css.map */
