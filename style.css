@@ -2,9 +2,14 @@
   padding: 0;
   margin: 0; }
 
+button:hover,
+.button:hover, #autoplay:checked + label.playlabel {
+  background-color: darkslategrey;
+  color: whitesmoke; }
+
 html {
   height: 100%;
-  background-color: slategrey;
+  background-color: slategray;
   color: whitesmoke; }
 
 body {
@@ -18,16 +23,27 @@ h1 {
   text-transform: uppercase;
   text-shadow: 2px 2px 5px #444; }
 
-button {
-  margin: 1rem .5rem;
-  padding: .5rem 1rem;
-  border: thin solid black;
+button,
+.button {
+  margin: 1rem .25rem;
+  padding: .25rem .75rem;
+  background-color: whitesmoke;
+  color: darkslategray;
+  border: 0;
+  border-radius: .3em;
+  font: inherit;
+  font-weight: bold;
   font-size: 1.1em;
   cursor: pointer;
-  transition: all .4s ease; }
-  button:hover {
-    background-color: darkslategrey;
-    color: white; }
+  transition: all .2s ease; }
+  button:disabled,
+  .button:disabled {
+    background-color: dimgray;
+    color: gainsboro; }
+
+#autoplay {
+  position: absolute;
+  clip: rect(0, 0, 0, 0); }
 
 .grid {
   margin: auto;
@@ -50,10 +66,5 @@ button {
     .grid input[type='checkbox']:checked {
       background: black;
       box-shadow: 0 0 0 99px darkslategray inset; }
-
-input#autoplay {
-  height: 20px;
-  width: 20px;
-  vertical-align: sub; }
 
 /*# sourceMappingURL=style.css.map */

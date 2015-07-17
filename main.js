@@ -177,10 +177,13 @@ var lifeView = new lifeView($('.grid'), 12);
     });
 
     buttons.autoplay.addEventListener('change', function () {
-        buttons.next.textContent = this.checked ? 'Start' : 'Next';
+        buttons.next.disabled = this.checked;
         lifeView.autoplay = this.checked;
-
-        if (!this.checked) clearTimeout(lifeView.timer);
+        if (lifeView.autoplay) {
+            lifeView.next();
+        } else {
+            clearTimeout(lifeView.timer);
+        }
     });
 })();
 
