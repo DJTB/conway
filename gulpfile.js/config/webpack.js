@@ -28,26 +28,23 @@ module.exports = function(env) {
     }
   };
 
-  if (env !== 'test') {
-    // Karma doesn't need entry points or output settings
-    webpackConfig.entry = {
-      index: './index.js'
-    };
+  webpackConfig.entry = {
+    index: './index.js'
+  };
 
-    webpackConfig.output = {
-      path: jsDest,
-      filename: env === 'production' ? '[name]-[hash].js' : '[name].js',
-      publicPath: publicPath
-    };
+  webpackConfig.output = {
+    path: jsDest,
+    filename: env === 'production' ? '[name]-[hash].js' : '[name].js',
+    publicPath: publicPath
+  };
 
-    // Factor out common dependencies into a shared.js
-    // webpackConfig.plugins.push(
-    //   new webpack.optimize.CommonsChunkPlugin({
-    //     name: 'shared',
-    //     filename: env === 'production' ? '[name]-[hash].js' : '[name].js'
-    //   })
-    // )
-  }
+  // Factor out common dependencies into a shared.js
+  // webpackConfig.plugins.push(
+  //   new webpack.optimize.CommonsChunkPlugin({
+  //     name: 'shared',
+  //     filename: env === 'production' ? '[name]-[hash].js' : '[name].js'
+  //   })
+  // )
 
   if (env === 'development') {
     webpackConfig.devtool = 'source-map';

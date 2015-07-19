@@ -153,7 +153,8 @@ class GameView {
       ap.checked ? this.next() : this.stop();
     });
 
-    ui.newGame.addEventListener('click', () => {
+    ui.newGame.addEventListener('click', (e) => {
+      e.preventDefault();
       this.reset(+prompt('Grid size?') || 16);
       resetButtons();
     });
