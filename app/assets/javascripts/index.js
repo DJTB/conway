@@ -153,8 +153,7 @@ class GameView {
     });
 
     controls.speedControl.addEventListener('change', () => {
-      console.log(controls.speedControl.value);
-      this.speed = controls.speedControl.value;
+      this.speed = controls.speedControl.max - controls.speedControl.value;
     });
 
     this.grid.addEventListener('change', (e) => {
