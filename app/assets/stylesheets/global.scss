@@ -112,7 +112,7 @@ h1 {
     display: inline-block;
   }
 
-  #autoplay {
+  .playbox{
     position: absolute;
     clip: rect(0, 0, 0, 0);
     &:checked + label.playlabel {

@@ -8,16 +8,16 @@
 <body>
   <h1>Conway’s Game of Life</h1>
 
-  <table class="grid"></table>
+  <table id="js-grid" class="grid"></table>
   <div class="controls">
-    <div class="buttons"><input id="autoplay" type="checkbox"/>
-      <label class="button playlabel" for="autoplay">Autoplay</label>
-      <button class="next">Next</button>
-      <button class="newGame">New</button>
+    <div class="buttons"><input class="playbox" id="js-autoPlay" type="checkbox"/>
+      <label class="button playlabel" for="js-autoPlay">Autoplay</label>
+      <button id="js-next">Next</button>
+      <button id="js-newGame">New</button>
     </div>
     <div class="speed">
-      <label for="speedControl">Speed</label>
-      <input type="range" id="speedControl" min="50" max="1500" step="25"/>
+      <label for="js-speedControl">Speed</label>
+      <input type="range" id="js-speedControl" min="50" max="1500" step="25"/>
     </div>
   </div>
 

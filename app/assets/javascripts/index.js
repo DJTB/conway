@@ -40,7 +40,7 @@ class Game {
       arr[y][x - 1], arr[y][x + 1],
       nextRow[x - 1], nextRow[x], nextRow[x + 1]
 
-      // +!! will convert undefined to 0
+    // +!! converts undefined to 0
     ].reduce((s, v) => {return s + +!!v}, 0);
   }
 
@@ -50,7 +50,7 @@ class Game {
 }
 
 class GameView {
-  constructor(size = 16, speed = 750, table = $('.grid')) {
+  constructor(size = 16, speed = 750, table = $('#js-grid')) {
     this.size = size;
     this.speed = speed;
     this.grid = table;
@@ -129,37 +129,44 @@ class GameView {
   }
 
   listen() {
-    let controls = {
-      next: $('button.next'),
-      autoplay: $('#autoplay'),
-      newGame: $('button.newGame'),
-      speedControl: $('#speedControl')
+    let ui = {
+      next: $('#js-next'),
+      newGame: $('#js-newGame'),
+      autoPlay: $('#js-autoPlay'),
+      speedControl: $('#js-speedControl')
     };
 
-    controls.next.addEventListener('click', () => {
+    function resetButtons() {
+      ui.autoPlay.checked = false;
+      ui.next.disabled = false;
+    }
+
+    ui.next.addEventListener('click', () => {
       this.next();
     });
 
-    controls.autoplay.addEventListener('change', () => {
-      let ap = controls.autoplay;
-      controls.next.disabled = ap.checked;
+    ui.autoPlay.addEventListener('change', () => {
+      let ap = ui.autoPlay;
+      ui.next.disabled = ap.checked;
       this.autoplay = ap.checked;
 
       ap.checked ? this.next() : this.stop();
     });
 
-    controls.newGame.addEventListener('click', () => {
+    ui.newGame.addEventListener('click', () => {
       this.reset(+prompt('Grid size?') || 16);
+      resetButtons();
     });
 
-    controls.speedControl.addEventListener('change', () => {
-      this.speed = controls.speedControl.max - controls.speedControl.value;
+    ui.speedControl.addEventListener('change', () => {
+      this.speed = ui.speedControl.max - ui.speedControl.value;
     });
 
     this.grid.addEventListener('change', (e) => {
-      if (e.target.nodeName == 'INPUT') this.stop();
-      controls.autoplay.checked = false;
-      controls.next.disabled = false;
+      if (e.target.nodeName == 'INPUT') {
+        this.stop();
+        resetButtons();
+      }
     });
 
     this.grid.addEventListener('keyup', (e) => {
