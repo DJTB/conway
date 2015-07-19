@@ -3,6 +3,10 @@
   margin: 0;
 }
 
+@mixin shadow() {
+  text-shadow: 2px 2px 5px #444;
+}
+
 %dark-bg {
   background-color: darkslategrey;
   color: whitesmoke;
@@ -31,68 +35,11 @@ body {
 }
 
 h1 {
-  margin: .5em 0 0;
+  margin: .5em 0 .5em;
   font-size: 3rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  text-shadow: 2px 2px 5px #444;
-}
-
-button,
-.button {
-  margin: 1rem .25rem;
-  padding: .25rem .75rem;
-  background-color: whitesmoke;
-  color: darkslategray;
-  border: 0;
-  border-radius: .3em;
-  font: inherit;
-  font-weight: bold;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: all .2s ease;
-  &:hover {
-    @extend %dark-bg;
-  }
-  &:disabled {
-    @extend %inactive;
-  }
-}
-
-.playlabel {
-  display: inline-block;
-}
-
-#autoplay {
-  position: absolute;
-  clip: rect(0,0,0,0);
-  &:checked + label.playlabel {
-    @extend %dark-bg;
-  }
-}
-
-@keyframes birth {
-  0% {
-    background-color: palegreen;
-  }
-  30% {
-    background-color: green;
-  }
-  60% {
-    background-color: darkslategrey;
-  }
-}
-
-@keyframes death {
-  0% {
-    background-color: red;
-  }
-  30% {
-    background-color: darkred;
-  }
-  60% {
-    background-color: darkslategrey;
-  }
+  @include shadow;
 }
 
 
@@ -126,6 +73,135 @@ button,
   }
 }
 
-.is-playing input[type='checkbox'] {
-  animation: death 500ms;
+@keyframes birth {
+  0% {
+    background-color: palegreen;
+  }
+  30% {
+    background-color: green;
+  }
+  60% {
+    background-color: darkslategrey;
+  }
+}
+
+
+.controls {
+  button,
+  .button {
+    margin: 1rem .25rem;
+    padding: .25rem .75rem;
+    background-color: whitesmoke;
+    color: darkslategray;
+    border: 0;
+    border-radius: .3em;
+    font: inherit;
+    font-weight: bold;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all .2s ease;
+    &:hover {
+      @extend %dark-bg;
+    }
+    &:disabled {
+      @extend %inactive;
+    }
+  }
+
+  label {
+    display: inline-block;
+  }
+
+  #autoplay {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    &:checked + label.playlabel {
+      @extend %dark-bg;
+    }
+  }
+}
+
+.speed {
+  label {
+    position: absolute;
+    clip: rect(0,0,0,0);
+  }
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 75vw;
+    max-width: 300px;
+    margin: 0.7px 0;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 25.6px;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+      background: #484d4d;
+      border-radius: 0;
+      border: 0 solid #010101;
+    }
+    &::-webkit-slider-thumb {
+      box-shadow: 0 0 1px #670000, 0 0 0 #810000;
+      border: 0 solid #ff1e00;
+      height: 27px;
+      width: 18px;
+      border-radius: 0;
+      background: rgba(255, 67, 95, 0.93);
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: -0.7px;
+    }
+    &::-moz-range-track {
+      width: 100%;
+      height: 25.6px;
+      cursor: pointer;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+      background: #484d4d;
+      border-radius: 0;
+      border: 0 solid #010101;
+    }
+    &::-moz-range-thumb {
+      box-shadow: 0 0 1px #670000, 0 0 0 #810000;
+      border: 0 solid #ff1e00;
+      height: 27px;
+      width: 18px;
+      border-radius: 0;
+      background: rgba(255, 67, 95, 0.93);
+      cursor: pointer;
+    }
+    &::-ms-track {
+      width: 100%;
+      height: 25.6px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    &::-ms-fill-lower {
+      background: #3e4242;
+      border: 0 solid #010101;
+      border-radius: 0;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+    }
+    &::-ms-fill-upper {
+      background: #484d4d;
+      border: 0 solid #010101;
+      border-radius: 0;
+      box-shadow: 1px 1px 1px #000, 0 0 1px #0d0d0d;
+    }
+    &::-ms-thumb {
+      box-shadow: 0 0 1px #670000, 0 0 0 #810000;
+      border: 0 solid #ff1e00;
+      height: 27px;
+      width: 18px;
+      border-radius: 0;
+      background: rgba(255, 67, 95, 0.93);
+      cursor: pointer;
+    }
+  }
 }

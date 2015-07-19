@@ -8,11 +8,18 @@
 <body>
   <h1>Conway’s Game of Life</h1>
 
-  <input id="autoplay" type="checkbox"/>
-  <label class="button playlabel" for="autoplay">Autoplay</label>
-  <button class="next">Next</button>
-  <button class="newGame">New</button>
   <table class="grid"></table>
+  <div class="controls">
+    <div class="buttons"><input id="autoplay" type="checkbox"/>
+      <label class="button playlabel" for="autoplay">Autoplay</label>
+      <button class="next">Next</button>
+      <button class="newGame">New</button>
+    </div>
+    <div class="speed">
+      <label for="speedControl">Speed:</label>
+      <input type="range" id="speedControl" min="50" max="1000" step="20"/>
+    </div>
+  </div>
 
   <script src="assets/javascripts/shared.js"></script>
   <script src="assets/javascripts/index.js"></script>

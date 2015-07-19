@@ -1,3 +1,4 @@
+// helpers
 function $(selector, container) {
   return (container || document).querySelector(selector);
 }
@@ -49,7 +50,7 @@ class Game {
 }
 
 class GameView {
-  constructor(size = 12, speed = 750, table = $('.grid')) {
+  constructor(size = 16, speed = 750, table = $('.grid')) {
     this.size = size;
     this.speed = speed;
     this.grid = table;
@@ -62,6 +63,7 @@ class GameView {
     this.autoplay = false;
     this.checkboxes = [];
     this.createGrid();
+    this.listen();
   }
 
   reset(size) {
@@ -72,14 +74,11 @@ class GameView {
   play() {
     this.game = new Game(this.boardArray);
     this.started = true;
-
-    // still want this to occur AFTER first move, otherwise entire board flashes on initial change;
-    $('.grid').classList.add('is-playing');
   }
 
   stop() {
     clearTimeout(this.timer);
-    $('.grid').classList.remove('is-playing');
+    this.started = false;
   }
 
   createGrid() {
@@ -103,31 +102,6 @@ class GameView {
 
       fragment.appendChild(row);
     }
-
-    this.grid.addEventListener('change', (e) => {
-      if (e.target.nodeName == 'INPUT') this.started = false;
-    });
-
-    this.grid.addEventListener('keyup', (e) => {
-      let checkbox = e.target;
-      if (checkbox.nodeName == 'INPUT') {
-        let [boxes, y, x] = [this.checkboxes, checkbox.coords[0], checkbox.coords[1]];
-        switch (e.keyCode) {
-          case 37:
-            if (x > 0) boxes[y][x - 1].focus();
-            break;
-          case 38:
-            if (y > 0) boxes[y - 1][x].focus();
-            break;
-          case 39:
-            if (x < this.size - 1) boxes[y][x + 1].focus();
-            break;
-          case 40:
-            if (y < this.size - 1) boxes[y + 1][x].focus();
-            break;
-        }
-      }
-    });
 
     this.grid.appendChild(fragment);
   }
@@ -153,40 +127,63 @@ class GameView {
       this.timer = setTimeout(() => this.next(), this.speed)
     }
   }
-}
-
-class GameController {
-
-  constructor(gameView) {
-    this.gameView = gameView;
-  }
 
   listen() {
-    let buttons = {
+    let controls = {
       next: $('button.next'),
       autoplay: $('#autoplay'),
-      newGame: $('button.newGame')
+      newGame: $('button.newGame'),
+      speedControl: $('#speedControl')
     };
 
-    buttons.next.addEventListener('click', () => {
-      this.gameView.next();
+    controls.next.addEventListener('click', () => {
+      this.next();
     });
 
-    buttons.autoplay.addEventListener('change', () => {
-      let ap = buttons.autoplay;
-      buttons.next.disabled = ap.checked;
-      this.gameView.autoplay = ap.checked;
+    controls.autoplay.addEventListener('change', () => {
+      let ap = controls.autoplay;
+      controls.next.disabled = ap.checked;
+      this.autoplay = ap.checked;
 
-      ap.checked ? this.gameView.next() : this.gameView.stop();
+      ap.checked ? this.next() : this.stop();
     });
 
-    buttons.newGame.addEventListener('click', () => {
-      this.gameView.reset(+prompt('Grid size?') || 12);
+    controls.newGame.addEventListener('click', () => {
+      this.reset(+prompt('Grid size?') || 16);
+    });
+
+    controls.speedControl.addEventListener('change', () => {
+      console.log(controls.speedControl.value);
+      this.speed = controls.speedControl.value;
+    });
+
+    this.grid.addEventListener('change', (e) => {
+      if (e.target.nodeName == 'INPUT') this.stop();
+      controls.autoplay.checked = false;
+      controls.next.disabled = false;
+    });
+
+    this.grid.addEventListener('keyup', (e) => {
+      let checkbox = e.target;
+      if (checkbox.nodeName == 'INPUT') {
+        let [boxes, y, x] = [this.checkboxes, checkbox.coords[0], checkbox.coords[1]];
+        switch (e.keyCode) {
+          case 37:
+            if (x > 0) boxes[y][x - 1].focus();
+            break;
+          case 38:
+            if (y > 0) boxes[y - 1][x].focus();
+            break;
+          case 39:
+            if (x < this.size - 1) boxes[y][x + 1].focus();
+            break;
+          case 40:
+            if (y < this.size - 1) boxes[y + 1][x].focus();
+            break;
+        }
+      }
     });
   }
 }
 
 let gameView = new GameView();
-gameView.init();
-let gameController = new GameController(gameView);
-gameController.listen();
