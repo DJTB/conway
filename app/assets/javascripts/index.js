@@ -54,7 +54,6 @@ class GameView {
     this.size = size;
     this.speed = speed;
     this.grid = table;
-    this.init();
   }
 
   init() {
@@ -68,6 +67,7 @@ class GameView {
 
   reset(size) {
     this.size = size;
+    if (this.started) this.stop();
     this.init();
   }
 
@@ -193,3 +193,4 @@ class GameView {
 }
 
 let gameView = new GameView();
+gameView.init();
