@@ -3,13 +3,18 @@
   margin: 0;
 }
 
-@mixin shadow() {
-  text-shadow: 2px 2px 5px #444;
+$dark: darkslategrey;
+$light: whitesmoke;
+
+
+%visuallyhidden {
+  position: absolute;
+  clip: rect(0,0,0,0);
 }
 
 %dark-bg {
-  background-color: darkslategrey;
-  color: whitesmoke;
+  background-color: $dark;
+  color: $light;
 }
 
 %inactive {
@@ -26,7 +31,7 @@
 html {
   height: 100%;
   background-color: slategray;
-  color: whitesmoke;
+  color: $light;
 }
 
 body {
@@ -39,7 +44,7 @@ h1 {
   font-size: 3rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  @include shadow;
+  text-shadow: 2px 2px 5px #444;
 }
 
 
@@ -52,13 +57,11 @@ h1 {
     border: 1px solid slategrey;
   }
 
-  // TODO: use checkbox + span styling since IE/FF don't respect appearance:none
-  // http://stackoverflow.com/questions/19145504/style-a-checkbox-in-firefox-remove-check-and-border
   input[type='checkbox'] {
     -moz-appearance: none;
     -webkit-appearance: none;
     display: block;
-    background: whitesmoke;
+    background: $light;
     width: 20px;
     height: 20px;
     border: 0;
@@ -67,7 +70,7 @@ h1 {
     }
 
     &:checked {
-      background-color: darkslategrey;
+      background-color: $dark;
       animation: birth 500ms;
     }
   }
@@ -81,7 +84,7 @@ h1 {
     background-color: green;
   }
   60% {
-    background-color: darkslategrey;
+    background-color: $dark;
   }
 }
 
@@ -91,8 +94,8 @@ h1 {
   .button {
     margin: 1rem .25rem;
     padding: .25rem .75rem;
-    background-color: whitesmoke;
-    color: darkslategray;
+    background-color: $light;
+    color: $dark;
     border: 0;
     border-radius: .3em;
     font: inherit;
@@ -108,13 +111,13 @@ h1 {
     }
   }
 
-  label {
-    display: inline-block;
+  input[type="number"] {
+    height: 25px;
+    font-size: 1.1em;
   }
 
   .playbox{
-    position: absolute;
-    clip: rect(0, 0, 0, 0);
+    @extend %visuallyhidden;
     &:checked + label.playlabel {
       @extend %dark-bg;
     }
@@ -123,8 +126,7 @@ h1 {
 
 .speed {
   label {
-    position: absolute;
-    clip: rect(0,0,0,0);
+    @extend %visuallyhidden;
   }
   input[type=range] {
     -webkit-appearance: none;

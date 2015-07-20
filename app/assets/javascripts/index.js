@@ -1,11 +1,20 @@
-// helpers
-function $(selector, container) {
-  return (container || document).querySelector(selector);
+/***************** helpers *****************/
+
+function $(expr, container) {
+  return typeof expr === 'string' ? (container || document).querySelector(expr) : expr || null;
 }
 
 function shallowClone(arr) {
   return arr.slice().map(row => row.slice());
 }
+
+// only needs to be approximate
+let viewSize = {
+  w: window.innerWidth,
+  h: window.innerHeight
+};
+
+/**********************************/
 
 class Game {
   constructor(seed) {
@@ -40,17 +49,18 @@ class Game {
       arr[y][x - 1], arr[y][x + 1],
       nextRow[x - 1], nextRow[x], nextRow[x + 1]
 
-    // +!! converts undefined to 0
+      // +!! converts undefined to 0
     ].reduce((s, v) => {return s + +!!v}, 0);
   }
 
+  // debugging
   toString() {
     return this.board.map((row) => row.join(' ')).join('\n')
   }
 }
 
 class GameView {
-  constructor(size = 16, speed = 750, table = $('#js-grid')) {
+  constructor(size = 20, speed = 750, table = $('#js-grid')) {
     this.size = size;
     this.speed = speed;
     this.grid = table;
@@ -132,6 +142,7 @@ class GameView {
     let ui = {
       next: $('#js-next'),
       newGame: $('#js-newGame'),
+      newSize: $('#js-newSize'),
       autoPlay: $('#js-autoPlay'),
       speedControl: $('#js-speedControl')
     };
@@ -154,8 +165,7 @@ class GameView {
     });
 
     ui.newGame.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.reset(+prompt('Grid size?') || 16);
+      this.reset(ui.newSize.value);
       resetButtons();
     });
 
