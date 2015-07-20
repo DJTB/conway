@@ -4,10 +4,10 @@
 
 Click on squares to add cells, you can also navigate using arrow keys and spacebar to toggle cells on/off.
 
-Next button will step through a single cycle. 
+Step button will step through a single cycle. 
 
-Autoplay will step through continually until disabled.
+Autoplay will step through continually until disabled or simulation reaches a static or infinite state.
 
-New button will prompt for a new grid size and reset the simulation.
+Reset button will reset the grid to the inputted size.
 
 Speed of simulation can be adjusted via the slider.
