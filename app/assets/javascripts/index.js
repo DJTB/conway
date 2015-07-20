@@ -8,12 +8,6 @@ function shallowClone(arr) {
   return arr.slice().map(row => row.slice());
 }
 
-// only needs to be approximate
-let viewSize = {
-  w: window.innerWidth,
-  h: window.innerHeight
-};
-
 /**********************************/
 
 class Game {
